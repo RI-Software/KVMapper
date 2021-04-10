@@ -92,12 +92,13 @@ export class Mapper {
       if (Array.isArray(obj)) {
         parsedChild = Mapper.parseArray(obj, property);
         newTail.push(...parsedChild.nodes);
+        newCur.push(...obj);
       } else {
         parsedChild = Mapper.parse(obj, property);
         newTail.push(parsedChild);
+        newCur.push(obj);
       }
 
-      newCur.push(obj);
       this.curNodeTail[i].nodes.push(parsedChild);
     }
 
