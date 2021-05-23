@@ -151,6 +151,12 @@ export class ReCreator {
       }
       result = arr;
     } else {
+      // ToDo: pass strings as settings
+      result["createdAt"] = node.createdAt;
+      result["updatedAt"] = node.updatedAt;
+      result["id"] = node.id;
+      // end;
+
       for (const n of node.nodes) {
         result[n.type] = ReCreator.recreate(n);
       }

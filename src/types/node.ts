@@ -6,6 +6,8 @@ export class Node {
   public type: string;
   public value: NodeData[] = [];
   public nodes: Node[] = [];
+  public updatedAt: Date = null;
+  public createdAt: Date = null;
 
   public includedOrEqual(this, another: Node, depth: number = 0): EqualityEnum {
     if (this.type !== another.type) {
