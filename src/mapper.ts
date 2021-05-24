@@ -138,7 +138,10 @@ export class ReCreator {
     return !(children.length === 0 || children.length !== node.nodes.length);
   }
 
-  public static recreate<T>(node: Node): T {
+  public static recreate<T>(node: Node,
+                            idPropName: string = "id",
+                            updatedAtPropName: string = "updatedAt",
+                            createdAtPropName: string = "createdAt"): T {
     let result: unknown = {};
     for (const v of node.value) {
       result[v.key] = v.value;
@@ -147,18 +150,18 @@ export class ReCreator {
     if (this.nodeIsArray(node)) {
       const arr = [];
       for (const n of node.nodes) {
-        arr.push(ReCreator.recreate(n));
+        arr.push(ReCreator.recreate(n, idPropName, updatedAtPropName, createdAtPropName));
       }
       result = arr;
     } else {
       // ToDo: pass strings as settings
-      result["createdAt"] = node.createdAt;
-      result["updatedAt"] = node.updatedAt;
-      result["id"] = node.id;
+      result[createdAtPropName] = node.createdAt;
+      result[updatedAtPropName] = node.updatedAt;
+      result[idPropName] = node.id;
       // end;
 
       for (const n of node.nodes) {
-        result[n.type] = ReCreator.recreate(n);
+        result[n.type] = ReCreator.recreate(n, idPropName, updatedAtPropName, createdAtPropName);
       }
     }
 
